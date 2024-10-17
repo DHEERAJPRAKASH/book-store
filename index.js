@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
+import bookRoutes from './src/books/book.route.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -10,6 +12,13 @@ const port = process.env.PORT || 5000;
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cors({
+    origin: ['http://localhost:5000'],
+    credentials: true,
+}));
+
+// Routes
+app.use('/api/books', bookRoutes);
 
 async function main() {
     try {
